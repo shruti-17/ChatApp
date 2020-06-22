@@ -2,6 +2,7 @@ package com.example.mychatapp;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.content.Intent;
@@ -35,7 +36,7 @@ public class MainActivity extends AppCompatActivity {
     public final int SIGN_IN_REQUEST_CODE=10;
     private FirebaseListAdapter<ChatMessage> adapter;
     private static String TAG="MainActivity";
-
+    RecyclerView listOfMessages;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -109,6 +110,8 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void displayChatMessages(){
+        listOfMessages = (RecyclerView)findViewById(R.id.list_of_messages);
+        listOfMessages.setLayoutManager(new LinearLayoutManager(this));
 
         FirebaseDatabase.getInstance().getReference().addValueEventListener(new ValueEventListener() {
             @Override
@@ -118,9 +121,9 @@ public class MainActivity extends AppCompatActivity {
 
                     ChatMessage message = snap.getValue(ChatMessage.class);
                     MessageList.add(message);
-//                    Log.d(TAG,"Loaded messages "+message.getMessageText());
+                    Log.d(TAG,"Loaded messages "+message.getMessageText());
                 }
-                RecyclerView listOfMessages = (RecyclerView)findViewById(R.id.list_of_messages);
+
                 MessageAdapter messageAdapter = new MessageAdapter(getApplicationContext(),MessageList);
                 listOfMessages.setAdapter(messageAdapter);
             }
@@ -130,36 +133,6 @@ public class MainActivity extends AppCompatActivity {
 
             }
         });
-
-
-//        Log.d(TAG,"Displaying Mesaages");
-//        ListView listOfMessages = (ListView)findViewById(R.id.list_of_messages);
-//        Query query = FirebaseDatabase.getInstance().getReference();
-//        FirebaseListOptions<ChatMessage> options =
-//                new FirebaseListOptions.Builder<ChatMessage>()
-//                        .setQuery(query, ChatMessage.class)
-//                        .setLayout(R.layout.message)
-//                        .build();
-//        adapter = new FirebaseListAdapter<ChatMessage>(options) {
-//            @Override
-//            protected void populateView(View v, ChatMessage model, int position) {
-//                // Get references to the views of message.xml
-//                TextView messageText = (TextView)v.findViewById(R.id.message_text);
-//                TextView messageUser = (TextView)v.findViewById(R.id.message_user);
-//                TextView messageTime = (TextView)v.findViewById(R.id.message_time);
-//
-//                // Set their text
-//                messageText.setText(model.getMessageText());
-//                messageUser.setText(model.getMessageUser());
-//                Log.d(TAG,model.getMessageText());
-//                // Format the date before showing it
-//                messageTime.setText(DateFormat.format("dd-MM-yyyy (HH:mm:ss)",
-//                        model.getMessageTime()));
-//            }
-//        };
-//
-//        listOfMessages.setAdapter(adapter);
-
     }
 
     @Override
