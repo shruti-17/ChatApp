@@ -2,7 +2,6 @@ package com.example.mychatapp;
 
 import android.content.Context;
 import android.text.format.DateFormat;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -21,7 +20,6 @@ public class MessageAdapter extends RecyclerView.Adapter<MessageAdapter.MessageV
     public MessageAdapter(Context mContext, List<ChatMessage> mData) {
         this.mContext = mContext;
         this.messageList = mData;
-        Log.d(TAG,"Object Created");
     }
 
     @NonNull

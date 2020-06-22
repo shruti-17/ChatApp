@@ -7,16 +7,12 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.text.format.DateFormat;
 import android.util.Log;
 import android.view.View;
-import android.widget.ListView;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import com.firebase.ui.auth.AuthUI;
 import com.firebase.ui.database.FirebaseListAdapter;
-import com.firebase.ui.database.FirebaseListOptions;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
@@ -25,7 +21,6 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.FirebaseDatabase;
-import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
@@ -85,7 +80,7 @@ public class MainActivity extends AppCompatActivity {
                         .addOnSuccessListener(new OnSuccessListener<Void>() {
                             @Override
                             public void onSuccess(Void aVoid) {
-                                Log.d(TAG, "Message added");
+//                                Log.d(TAG, "Message added");
                             }
                         })
                         .addOnFailureListener(new OnFailureListener() {
@@ -96,7 +91,6 @@ public class MainActivity extends AppCompatActivity {
                                 }
                         });
 
-                Log.d(TAG,input.getText().toString());
                 // Clear the input
                 input.setText("");
             }
@@ -121,7 +115,6 @@ public class MainActivity extends AppCompatActivity {
 
                     ChatMessage message = snap.getValue(ChatMessage.class);
                     MessageList.add(message);
-                    Log.d(TAG,"Loaded messages "+message.getMessageText());
                 }
 
                 MessageAdapter messageAdapter = new MessageAdapter(getApplicationContext(),MessageList);
